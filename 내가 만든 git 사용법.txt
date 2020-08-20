@@ -67,6 +67,60 @@ check out				/ 별도의 브랜치를 만들때 사용
 git branch develop 			/ 디벨롭 브랜치 생서
 git branch				/ 어떤 브랜치 사용중인지 확인
 git checkout 브랜치이름			/ 해당 브랜치로 접속
+git merge 브랜치이름(작업한 브랜치)		/ 해당 브랜치가 커밋한 내용을 마스터에서 최종확인해서 푸쉬하기 전
+git branch -d 브랜치이름			/ 해당 브랜치 병합이 끝난 후 사용하지 않을 때 사용
+
+기본적으로 브랜치 병합은 마스터브랜치에서 사용
+
+
+==================================
+git branch 충동시
+
+develop 브랜치에서 파일 수정
+master 브랜치에서 동일한 파일을 다른 내용으로 수정
+git log를 checkout으로 master와 develop이 서로 명시가 안되어있음 ( 서로 같은 파일에 다른 내용이기 때문에)
+이상태에서 master브랜치에서 merge 병합 수행을 하면 conflict 충돌 오류가 발생
+이럴땐 직접 소스코드로 들어가면서 master와 develop의 상이한 부분이 표시되어 있음
+수동으로 선택, 수정 후 add, commit을 사용한 후에 push하면됨, merge를 사용할 경우 이미 수행됐다고 명시됨
+
+==================================
+git 원격 저장소 관리
+
+git remote 				/ 현재 원격저장소 이름을 알 수 있음
+git remote show 저장소 이름		/ 저장소의 이름을 자세하게 확인할 수 있음
+git remote add 저장소 이름 , 특정한 경로	/ 저장소 추가하고 원하는 리포지터리를 가져올수 있음
+git remote -v				/원격 저장소의 전체 목록을 가져옴
+gir remote rename 기존저장소 , 바꾸저장소	/원하는 저장소의 이름을 바꿀수 있음
+git remote rm 저장소이름			/특정 저장소 삭제
+
+========================================
+log 사용법
+
+git log --stat				/각 커밋에 대한 통계정보
+git log --graph				/브랜치와 병합정보로 그래프로 출력
+git log -p					/커밋에 적용된 구체적인 항목출력
+git long --pretty				/커밋정보를 우리가 지정한 형식으로 출력
+git log --pretty=oneline			/커밋정보를 한줄로 출력
+git --pretty=format:"%h -> %an, %ar : %s" --graph / 커밋해쉬값 , 작성자 이름, 작성날짜 , 커밋메세지
+==========================================
+소스코드만 추출하기
+
+git archive --format=zip master -o Matser.zip	/아카이브 명령어를 통해 압축을한다 -o는 아웃풋을 의미
+
+git archive --format=zip master -o ../Matser.zip/이전 폴더로 압축
+
+========================================
+git config 환경설정 (리눅스 기준)
+
+git config --list 				/현재 깃환경설정 출력
+
+git config --global user.name "---------"
+
+cd ~
+ls -al
+cat .gitconfig
+
+git init??? 공부필요
 
 
 
