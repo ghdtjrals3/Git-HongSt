@@ -123,5 +123,5 @@ cat .gitconfig
 git init??? 공부필요
 
 
-
+sexy연준
 
