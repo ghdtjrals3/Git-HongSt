@@ -1,4 +1,4 @@
-git의 동작원리
+﻿git의 동작원리
 
 Working directory  			     / 작업할 파일이 있는 디렉토리
 
@@ -122,6 +122,4 @@ cat .gitconfig
 
 git init??? 공부필요
 
-
-sexy연준
-
+깃 프로젝트 사용법 더 알아야 됨 차후 추가하자
