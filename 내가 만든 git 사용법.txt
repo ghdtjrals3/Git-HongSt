@@ -120,6 +120,4 @@ cd ~
 ls -al
 cat .gitconfig
 
-git init??? 공부필요
-
 깃 프로젝트 사용법 더 알아야 됨 차후 추가하자
