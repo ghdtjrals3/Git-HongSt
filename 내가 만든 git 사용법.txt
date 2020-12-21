@@ -17,7 +17,7 @@ cd C:/Education				     / 임의 생성 폴더로 이동
 
 git clone https://github.com/ghdtjrals3/Git-HongSt  /폴더 클론해주기 >> 임의생성한 Education폴더에 Git-Hongst 저장소 추가
 
-
+/
 ============================================
 
 cd Git-Hongst				     /  내 저장소로 가기
