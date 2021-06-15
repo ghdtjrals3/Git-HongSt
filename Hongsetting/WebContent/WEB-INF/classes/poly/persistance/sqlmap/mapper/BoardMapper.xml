@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.IBoardMapper">
+	
+	<!-- 게시판 데이터 넣기 -->
+	<insert id="insertData" parameterType="BoardDTO">
+		INSERT INTO SH_CODING_QST
+		(
+			QST_SEQ,
+			TITLE,
+			CONTENT,
+			REG_NAME,
+			REG_DATE,
+			VALUE
+		)
+		VALUES
+		(
+			(SELECT IFNULL(MAX(A.QST_SEQ),0)+1 FROM SH_CODING_QST A),
+			#{title},
+			#{content},
+			#{reg_name},
+			#{reg_date},
+			#{value}
+		)
+	</insert>
+	
+	<!--게시판 데이터 가져오기-->
+	<select id="getData" resultType="BoardDTO">
+		SELECT
+			QST_SEQ, TITLE, CONTENT, REG_NAME, REG_DATE
+		FROM
+			SH_CODING_QST
+		WHERE
+			VALUE = '1'
+	</select>	
+	
+	<!--게시판 상세 정보  -->
+	<select id="boardDetail" resultType="BoardDTO" parameterType="BoardDTO">
+		SELECT
+			TITLE, CONTENT, REG_NAME, REG_DATE, QST_SEQ
+		FROM
+			myAwsDB.SH_CODING_QST
+		WHERE
+			QST_SEQ=#{qst_seq}
+	</select>	
+
+	<!-- 답변 데이터 넣기 -->
+	<insert id="answerInsertData" parameterType="BoardDTO">
+		INSERT INTO SH_CODING_QST
+		(
+			QST_SEQ,
+			CONTENT,
+			REG_NAME,
+			REG_DATE,
+			VALUE,
+			RFE_SEQ
+		)
+		VALUES
+		(
+			(SELECT IFNULL(MAX(A.QST_SEQ),0)+1 FROM SH_CODING_QST A),
+			#{content},
+			#{reg_name},
+			#{reg_date},
+			#{value},
+			#{rfe_seq}
+		)
+	</insert>
+	
+	<!--답변 데이터 가져오기-->
+	<select id="boardAnswerDetail" resultType="BoardDTO" parameterType="BoardDTO">
+		SELECT
+			CONTENT,
+			VALUE,
+			REG_NAME,
+			QST_SEQ
+		FROM
+			myAwsDB.SH_CODING_QST
+		WHERE
+			VALUE = '2' AND	RFE_SEQ = #{qst_seq}
+	</select>	
+	
+	<!--삭제 하기-->
+	<delete id="deleteBoard" parameterType="BoardDTO">
+		DELETE FROM 
+			myAwsDB.SH_CODING_QST
+		WHERE
+			QST_SEQ=#{qst_seq} OR RFE_SEQ=#{rfe_seq}
+	</delete>
+	
+	<!--답변 삭제하기 -->
+	<delete id="deleteBoardAnswer" parameterType="BoardDTO">
+		DELETE FROM 
+			myAwsDB.SH_CODING_QST
+		WHERE
+			QST_SEQ=#{qst_seq}
+	</delete>
+	
+	<!-- 수정 하기-->
+	<update id="updateBoard" parameterType="BoardDTO">
+		UPDATE 
+			myAwsDB.SH_CODING_QST
+		SET 
+			TITLE = #{title}, CONTENT = #{content}
+		WHERE QST_SEQ = #{qst_seq};
+	</update>
+	
+	<!-- 답변 수정 하기-->
+	<update id="updateBoardAnswer" parameterType="BoardDTO">
+		UPDATE 
+			myAwsDB.SH_CODING_QST
+		SET 
+			CONTENT = #{content}
+		WHERE QST_SEQ = #{qst_seq};
+	</update>
+</mapper>
+
+

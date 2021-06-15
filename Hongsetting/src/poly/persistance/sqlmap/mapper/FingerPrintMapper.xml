@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.IFingerPrintMapper">
+
+	<insert id="attend" parameterType="AttendDTO">
+		INSERT INTO myAwsDB.ATTEND
+		(
+			SEQ,
+			ID,
+			NAME,
+			ATTENDTIME,
+			VALUE
+		)
+		VALUES
+		(
+			(SELECT IFNULL(MAX(A.SEQ),0)+1 FROM myAwsDB.ATTEND A),
+			(select myAwsDB.FINGERPRINT.FINGER_SEQ from myAwsDB.FINGERPRINT WHERE myAwsDB.FINGERPRINT.FINGER_SEQ = #{id}),
+    		(select myAwsDB.FINGERPRINT.NAME from myAwsDB.FINGERPRINT WHERE myAwsDB.FINGERPRINT.FINGER_SEQ = #{id}),
+    		#{attendTime},
+    		IF(((SELECT COUNT(*) FROM myAwsDB.ATTEND AS C WHERE ID = '4') = "0"),1,(SELECT 
+				CASE
+				WHEN VALUE = 2
+				THEN 1
+	            WHEN VALUE = 1
+	            THEN 2
+				END AS VALUE2
+			FROM myAwsDB.ATTEND AS B
+			WHERE SEQ = (SELECT IFNULL(MAX(A.SEQ),0) FROM myAwsDB.ATTEND A WHERE ID = #{id}))
+		));
+		
+	</insert>
+	
+	<!--지문 데이터 가져오기-->
+	<select id="getData" resultType="AttendDTO">
+		SELECT
+			SEQ, ID, NAME, ATTENDTIME, VALUE
+		FROM
+			myAwsDB.ATTEND
+		WHERE
+			ID = #{id}
+	</select>
+</mapper>
+
+
